@@ -1,15 +1,28 @@
-const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
+const { defineConfig } = require('@vue/cli-service')
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+
 module.exports = defineConfig({
   transpileDependencies: true,
+  publicPath: process.env.NODE_ENV === 'development' ? './' : '',
   // 1. webpack-merge 合并配置
-  // configureWebpack: {
-  //   resolve: {
-  //     alias: {
-  //       components: '@/components'
-  //     }
-  //   }
-  // }
+  configureWebpack: {
+    resolve: {
+      alias: {
+        components: '@/components'
+      }
+    },
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()]
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()]
+      })
+    ]
+  }
 
   // 2. 函数
   // configureWebpack: (config) => {
@@ -21,9 +34,9 @@ module.exports = defineConfig({
   // }
 
   // chainWebpack
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@', path.resolve('src'))
-      .set('components', '@/components')
-  }
+  // chainWebpack: (config) => {
+  //   config.resolve.alias
+  //     .set('@', path.resolve('src'))
+  //     .set('components', '@/components')
+  // }
 })
