@@ -28,5 +28,5 @@ instance.interceptors.response.use(
 )
 
 export function request(options: AxiosRequestConfig) {
-  return instance(options)
+  return instance.request(options)
 }

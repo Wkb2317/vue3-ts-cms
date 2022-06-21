@@ -8,14 +8,27 @@
 
 <script setup lang="ts">
 import { useStore } from 'vuex'
-import { BASE_URL } from '@/global/config'
-
+// import { BASE_URL } from '@/global/config'
+import kbRequest from '@/service'
 const store = useStore()
 
 const counter = store.state.counter
 
-console.log(process.env.VUE_APP_BASE_URL)
-console.log(BASE_URL)
+interface ResData {
+  data: any
+  returncode: string
+  status: boolean
+}
+
+kbRequest
+  .request<ResData>({
+    url: '/home/multidata',
+    method: 'get',
+    showLoading: true
+  })
+  .then((res) => {
+    console.log(res)
+  })
 </script>
 
 <style lang="scss" scoped></style>
