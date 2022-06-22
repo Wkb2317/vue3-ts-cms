@@ -1,8 +1,24 @@
 import { App } from 'vue'
 
-import { ElButton, ElLoading } from 'element-plus'
+import {
+  ElButton,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElLoading,
+  ElTabPane,
+  ElTabs
+} from 'element-plus'
 
-const components = [ElButton, ElLoading]
+const components = [
+  ElButton,
+  ElLoading,
+  ElTabPane,
+  ElTabs,
+  ElForm,
+  ElFormItem,
+  ElInput
+]
 
 export default function (app: App): void {
   for (const component of components) {

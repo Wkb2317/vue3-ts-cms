@@ -54,7 +54,7 @@ class Request {
     )
   }
 
-  request<T>(config: kbRequestConfig): Promise<T> {
+  request<T>(config: kbRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config)
@@ -80,16 +80,16 @@ class Request {
     })
   }
 
-  get<T>(config: kbRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'get' })
+  get<T>(config: kbRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'get' })
   }
 
-  post<T>(config: kbRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'post' })
+  post<T>(config: kbRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'post' })
   }
 
-  delete<T>(config: kbRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'delete' })
+  delete<T>(config: kbRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'delete' })
   }
 }
 

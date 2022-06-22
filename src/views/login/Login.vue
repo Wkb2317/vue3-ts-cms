@@ -1,34 +1,28 @@
-// eslint-disable-next-line
 <template>
-  <div>
-    {{ counter }}
-    <el-button type="primary">login</el-button>
+  <div class="login">
+    <login-panel></login-panel>
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from 'vuex'
-// import { BASE_URL } from '@/global/config'
-import kbRequest from '@/service'
-const store = useStore()
+<script lang="ts">
+import { defineComponent } from 'vue'
+import LoginPanel from './cpns/login-panel.vue'
 
-const counter = store.state.counter
-
-interface ResData {
-  data: any
-  returncode: string
-  status: boolean
-}
-
-kbRequest
-  .request<ResData>({
-    url: '/home/multidata',
-    method: 'get',
-    showLoading: true
-  })
-  .then((res) => {
-    console.log(res)
-  })
+export default defineComponent({
+  name: 'login',
+  components: {
+    LoginPanel
+  }
+})
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.login {
+  height: 100%;
+  width: 100%;
+  background-image: url('../../assets/img/login-bg.svg');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
