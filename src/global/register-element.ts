@@ -2,9 +2,11 @@ import { App } from 'vue'
 
 import {
   ElButton,
+  ElCheckbox,
   ElForm,
   ElFormItem,
   ElInput,
+  ElLink,
   ElLoading,
   ElTabPane,
   ElTabs
@@ -17,7 +19,9 @@ const components = [
   ElTabs,
   ElForm,
   ElFormItem,
-  ElInput
+  ElInput,
+  ElCheckbox,
+  ElLink
 ]
 
 export default function (app: App): void {

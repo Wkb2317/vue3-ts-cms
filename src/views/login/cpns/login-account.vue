@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, defineExpose } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { rules } from '../config/account-config'
 
@@ -28,6 +28,14 @@ interface ILoginInfo {
 const loginInfo: ILoginInfo = reactive({
   name: '',
   password: ''
+})
+
+const login = () => {
+  console.log('正在登录')
+}
+
+defineExpose({
+  login
 })
 </script>
 
