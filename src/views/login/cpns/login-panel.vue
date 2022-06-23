@@ -1,8 +1,14 @@
 <template>
   <div class="login-panel">
     <h2>后台管理系统</h2>
-    <el-tabs stretch type="border-card" class="demo-tabs">
-      <el-tab-pane>
+    <el-tabs
+      v-model="currentTab"
+      @tab-click="tabClick"
+      stretch
+      type="border-card"
+      class="demo-tabs"
+    >
+      <el-tab-pane name="account">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon>
@@ -13,7 +19,7 @@
         </template>
         <loginAccount ref="loginAccountRef" />
       </el-tab-pane>
-      <el-tab-pane label="Config"
+      <el-tab-pane name="phone"
         ><template #label>
           <span class="custom-tabs-label">
             <el-icon>
@@ -49,9 +55,13 @@ import loginPhone from './login-phone.vue'
 
 const isRemember = ref(true)
 const loginAccountRef = ref<InstanceType<typeof loginAccount>>()
+const currentTab = ref<string>('account')
 
 const handleLoginClick = () => {
-  loginAccountRef.value?.login()
+  loginAccountRef.value?.login(isRemember.value)
+}
+const tabClick = () => {
+  console.log(currentTab.value)
 }
 </script>
 

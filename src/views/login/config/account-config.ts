@@ -2,8 +2,8 @@ const rules = {
   name: [
     { required: true, message: '请输入账户', trigger: 'blur' },
     {
-      pattern: /^[a-z0-9]{3,6}$/,
-      message: '账户需要3到6位',
+      pattern: /^[a-z0-9]{3,8}$/,
+      message: '账户需要3到8位',
       trigger: 'blur'
     }
   ],

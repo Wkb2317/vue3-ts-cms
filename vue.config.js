@@ -9,6 +9,17 @@ module.exports = defineConfig({
   publicPath: process.env.NODE_ENV === 'development' ? './' : '',
   // 1. webpack-merge 合并配置
   configureWebpack: {
+    devServer: {
+      proxy: {
+        '^/api': {
+          target: 'http://152.136.185.210:5000',
+          pathRewrite: {
+            '^/api': ''
+          },
+          changeOrigin: true
+        }
+      }
+    },
     resolve: {
       alias: {
         components: '@/components'
