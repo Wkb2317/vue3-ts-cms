@@ -19,11 +19,13 @@
 <script setup lang="ts">
 import { reactive, ref, defineExpose } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import type { ElForm, FormInstance, FormRules } from 'element-plus'
 import { rules } from '../config/account-config'
 import localCache from '@/utils/cache'
 
 const store = useStore()
+const router = useRouter()
 const loginInfo = reactive({
   name: localCache.getCache('name') ?? '',
   password: localCache.getCache('password') ?? ''
