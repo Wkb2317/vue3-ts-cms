@@ -47,10 +47,19 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       const userMenusRes = await requestUserMenusByRoleId(userInfo.role.id)
       const menus = userMenusRes.data
-      commit('changeMenus', menus)
+
       LocalCache.setCache('menus', menus)
 
       router.push('/main')
+    },
+
+    loadLocalLogin({ commit }) {
+      const token = LocalCache.getCache('token')
+      const userInfo = LocalCache.getCache('userInfo')
+      const menus = LocalCache.getCache('menus')
+      if (token) commit('changeToken', token)
+      if (userInfo) commit('changeUserInfo', userInfo)
+      if (menus) commit('changeMenus', menus)
     }
   }
 }

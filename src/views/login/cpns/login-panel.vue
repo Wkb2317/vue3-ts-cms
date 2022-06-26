@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { UserFilled, Iphone } from '@element-plus/icons-vue'
 import loginAccount from './login-account.vue'
 import loginPhone from './login-phone.vue'
