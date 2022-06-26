@@ -6,6 +6,7 @@ import {
   requestUserMenusByRoleId
 } from '@/service/login/login'
 import LocalCache from '@/utils/cache'
+import { mapMenusToRoutes } from '@/utils/map-menus'
 
 import type { ILoginState } from './type'
 import type { IRootState } from '../type'
@@ -30,6 +31,11 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeMenus(state, menus) {
       state.menus = menus
+      // 路由动态注册
+      const routes = mapMenusToRoutes(menus)
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   },
   actions: {

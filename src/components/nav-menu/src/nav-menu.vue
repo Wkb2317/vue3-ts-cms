@@ -21,7 +21,10 @@
               <span>{{ item.name }}</span>
             </template>
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.id.toString()">
+              <el-menu-item
+                @click="handleMenuItemClick(subItem)"
+                :index="subItem.id.toString()"
+              >
                 <el-icon v-if="subItem.icon">
                   <component :is="splitIconClass(subItem.icon)"></component>
                 </el-icon>
@@ -39,6 +42,7 @@
 <script setup lang="ts">
 import { computed, defineProps } from 'vue'
 import { useStore } from '@/store'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   collaps: {
@@ -47,6 +51,7 @@ const props = defineProps({
   }
 })
 const store = useStore()
+const router = useRouter()
 const userMenus = computed(() => store.state.login.menus)
 console.log(store.state.login.menus)
 
@@ -54,6 +59,10 @@ const splitIconClass = (classStr: string) => {
   const str = classStr.split('-')[2]
   const newStr = str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase()
   return newStr === 'Chat' ? 'ChatDotRound' : newStr
+}
+
+const handleMenuItemClick = (item: any) => {
+  router.push(item.url)
 }
 </script>
 
