@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 <template>
-  <div>home</div>
+  <div>main</div>
 </template>
 
 <script setup lang="ts"></script>

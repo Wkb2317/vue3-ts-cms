@@ -1,4 +1,5 @@
 import { Module } from 'vuex'
+import router from '@/router'
 import {
   accountLoginRequest,
   requestUserInfoById,
@@ -15,7 +16,8 @@ const loginModule: Module<ILoginState, IRootState> = {
   state() {
     return {
       token: '',
-      userInfo: {}
+      userInfo: {},
+      menus: []
     }
   },
   getters: {},
@@ -25,6 +27,9 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserInfo(state, userInfo) {
       state.userInfo = userInfo
+    },
+    changeMenus(state, menus) {
+      state.menus = menus
     }
   },
   actions: {
@@ -41,7 +46,11 @@ const loginModule: Module<ILoginState, IRootState> = {
       LocalCache.setCache('userInfo', userInfo)
 
       const userMenusRes = await requestUserMenusByRoleId(userInfo.role.id)
-      console.log(userMenusRes)
+      const menus = userMenusRes.data
+      commit('changeMenus', menus)
+      LocalCache.setCache('menus', menus)
+
+      router.push('/main')
     }
   }
 }

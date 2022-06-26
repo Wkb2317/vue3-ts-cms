@@ -16,12 +16,14 @@ export function accountLoginRequest(account: IAccount) {
 
 export function requestUserInfoById(id: number) {
   return Request.get<IDataType>({
-    url: LoginApi.LoginUserInfo + id
+    url: LoginApi.LoginUserInfo + id,
+    showLoading: false
   })
 }
 
 export function requestUserMenusByRoleId(id: number) {
   return Request.get<IDataType>({
-    url: LoginApi.UserMenus + id + '/menu'
+    url: LoginApi.UserMenus + id + '/menu',
+    showLoading: false
   })
 }
