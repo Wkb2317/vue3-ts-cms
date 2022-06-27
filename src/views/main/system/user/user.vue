@@ -1,18 +1,15 @@
 <template>
   <div class="user">
-    <h2>user</h2>
+    <div>
+      <Form v-bind="formConfig"></Form>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'user',
-  setup() {
-    return {}
-  }
-})
+<script setup lang="ts">
+import {} from 'vue'
+import Form from '@/base-ui/form'
+import formConfig from './config/search-config'
 </script>
 
 <style scoped></style>
