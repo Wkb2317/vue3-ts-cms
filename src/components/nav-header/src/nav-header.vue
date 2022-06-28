@@ -5,6 +5,7 @@
         <Fold v-if="props.collaps" />
         <Expand v-else />
       </el-icon>
+      <navBread :breads="breads" class="bread"></navBread>
     </div>
     <div class="header-right">
       <userAvatar></userAvatar>
@@ -13,9 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps } from 'vue'
+import { defineEmits, defineProps, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from '@/store'
 import { Expand, Fold } from '@element-plus/icons-vue'
 import userAvatar from './user-avatar.vue'
+import navBread from '@/base-ui/bread'
+import { pathMapBreads } from '@/utils/find-id-by-path'
 
 const emit = defineEmits(['changeCollaps'])
 const props = defineProps({
@@ -23,6 +28,12 @@ const props = defineProps({
     type: Boolean,
     defaule: false
   }
+})
+
+const breads = computed(() => {
+  const store = useStore()
+  const route = useRoute()
+  return pathMapBreads(store.state.login.menus, route.path)
 })
 
 const toggleCollaps = () => {
@@ -43,7 +54,13 @@ const toggleCollaps = () => {
     }
   }
 
-  .header-right {
+  .header-left {
+    display: flex;
+    align-items: center;
+
+    .bread {
+      margin-left: 10px;
+    }
   }
 }
 </style>
