@@ -6,6 +6,7 @@
     </div>
     <el-menu
       :collapse="props.collaps"
+      :default-active="defaultActiveId"
       class="el-menu-vertical"
       background-color="#0c2135"
       text-color="#b7bdc3"
@@ -40,9 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue'
+import { computed, defineProps, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from '@/store'
-import { useRouter } from 'vue-router'
+import { findIdByPath } from '@/utils/find-id-by-path'
 
 const props = defineProps({
   collaps: {
@@ -52,8 +54,12 @@ const props = defineProps({
 })
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 const userMenus = computed(() => store.state.login.menus)
-console.log(store.state.login.menus)
+// console.log(store.state.login.menus)
+
+const currentRoute = findIdByPath(userMenus.value, route.path)
+const defaultActiveId = ref(currentRoute.id + '')
 
 const splitIconClass = (classStr: string) => {
   const str = classStr.split('-')[2]

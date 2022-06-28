@@ -1,5 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 
+let firstMenu: any = null
+
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
@@ -19,6 +21,9 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
         const route = allRoutes.find((route) => route.path === menu.url)
         if (route) {
           routes.push(route)
+          if (!firstMenu) {
+            firstMenu = menu
+          }
         }
       } else {
         recurseGetRoute(menu.children)
@@ -29,3 +34,5 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   recurseGetRoute(userMenus)
   return routes
 }
+
+export { firstMenu }

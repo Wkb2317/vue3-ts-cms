@@ -10,7 +10,8 @@ import './assets/css/index.scss'
 const app: App = createApp(rootApp)
 
 registerApp(app)
-app.use(router)
 app.use(store)
 setupStore()
+app.use(router)
+
 app.mount('#app')
