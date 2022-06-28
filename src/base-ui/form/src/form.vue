@@ -6,16 +6,24 @@
           <el-col v-bind="colLayout">
             <el-form-item :style="itemStyle" :label="item.lable">
               <template v-if="item.type === 'input'">
-                <el-input :placeholder="item.placeholder"></el-input>
+                <el-input
+                  :placeholder="item.placeholder"
+                  v-model="formData[`${item.filed}`]"
+                ></el-input>
               </template>
               <template v-else-if="item.type === 'password'">
                 <el-input
                   show-password
+                  v-model="formData[`${item.filed}`]"
                   :placeholder="item.placeholder"
                 ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
-                <el-select style="width: 100%" :placeholder="item.placeholder">
+                <el-select
+                  v-model="formData[`${item.filed}`]"
+                  style="width: 100%"
+                  :placeholder="item.placeholder"
+                >
                   <el-option
                     v-for="optionItem in item.options"
                     :key="optionItem.value"
@@ -26,6 +34,7 @@
               </template>
               <template v-else-if="item.type === 'date-picker'">
                 <el-date-picker
+                  v-model="formData[`${item.filed}`]"
                   type="date"
                   :placeholder="item.placeholder"
                   :start-placeholder="item.otherOptions.startPlaceholder"
@@ -37,14 +46,21 @@
         </template>
       </el-row>
     </el-form>
+    <slot name="footer"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType } from 'vue'
-import { IFormItem, IForm } from '../type'
+import { ref, defineProps, PropType, defineEmits, watch } from 'vue'
+import { IFormItem } from '../type'
+
+const emits = defineEmits(['update:modelValue'])
 
 const props = defineProps({
+  modelValue: {
+    type: Object,
+    require: true
+  },
   formItems: {
     type: Array as PropType<IFormItem[]>,
     default: () => []
@@ -74,6 +90,16 @@ const props = defineProps({
     }
   }
 })
+
+const formData = ref({ ...props.modelValue })
+
+watch(
+  formData,
+  (newValue) => {
+    emits('update:modelValue', newValue)
+  },
+  { deep: true }
+)
 </script>
 
 <style scoped></style>

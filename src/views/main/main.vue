@@ -9,8 +9,10 @@
           <navHeader @changeCollaps="changeCollaps" :collaps="collaps" />
         </el-header>
         <el-main class="page-content">
-          <div class="page-info">
-            <router-view></router-view>
+          <div class="page-info" mode="out-in">
+            <transition name="fade">
+              <router-view></router-view>
+            </transition>
           </div>
         </el-main>
       </el-container>
@@ -86,5 +88,16 @@ const changeCollaps = () => {
   color: #333;
   text-align: center;
   background-color: #f0f2f5;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.8s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateX(40px);
+  opacity: 0;
 }
 </style>

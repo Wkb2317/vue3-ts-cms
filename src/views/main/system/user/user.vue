@@ -1,15 +1,12 @@
 <template>
   <div class="user">
-    <div>
-      <Form v-bind="formConfig"></Form>
-    </div>
+    <PageSearch :formConfig="formConfig"></PageSearch>
   </div>
 </template>
 
 <script setup lang="ts">
-import {} from 'vue'
-import Form from '@/base-ui/form'
+import PageSearch from '@/base-ui/page-search'
 import formConfig from './config/search-config'
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
