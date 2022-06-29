@@ -9,10 +9,11 @@
           <navHeader @changeCollaps="changeCollaps" :collaps="collaps" />
         </el-header>
         <el-main class="page-content">
-          <div class="page-info" mode="out-in">
-            <transition name="fade">
-              <router-view></router-view>
-            </transition>
+          <div class="page-info">
+            <router-view v-slot="{ Component }">
+              <transition name="fade" mode="out-in">
+                <component :is="Component"></component> </transition
+            ></router-view>
           </div>
         </el-main>
       </el-container>
@@ -92,7 +93,7 @@ const changeCollaps = () => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.8s ease;
+  transition: all 0.5s ease;
 }
 
 .fade-enter-from,
