@@ -80,15 +80,15 @@ class Request {
     })
   }
 
-  get<T>(config: kbRequestConfig<T>): Promise<T> {
+  get<T = any>(config: kbRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'get' })
   }
 
-  post<T>(config: kbRequestConfig<T>): Promise<T> {
+  post<T = any>(config: kbRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'post' })
   }
 
-  delete<T>(config: kbRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: kbRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'delete' })
   }
 }
