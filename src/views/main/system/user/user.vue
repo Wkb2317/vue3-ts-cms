@@ -1,20 +1,21 @@
 <template>
   <div class="user">
     <PageSearch :formConfig="formConfig"></PageSearch>
-    <Table :listData="userList" :propsList="propsList">
-      <template #status="row">
-        {{ row.enable ? '启用' : '禁止' }}
-      </template>
-    </Table>
+    <pageContent
+      :contentConfig="contentConfig"
+      :listData="userList"
+    ></pageContent>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+// import { Delete, Edit, AddLocation, Refresh } from '@element-plus/icons-vue'
 import { useStore } from '@/store'
+import { formConfig } from '@/views/main/system/user/config/search-config'
+import { contentConfig } from '@/views/main/system/user/config/content-config'
 import PageSearch from '@/base-ui/page-search'
-import Table from '@/base-ui/table'
-import formConfig from './config/search-config'
+import pageContent from '@/components/page-content/src/page-content.vue'
 
 const store = useStore()
 
@@ -23,21 +24,11 @@ const requestPayload = {
   data: {
     offset: 0,
     size: 10
-    // name: 'w',
-    // cellphone: 4
   }
 }
 store.dispatch('system/getListPageAction', requestPayload)
 
 const userList = computed(() => store.state.system.userList)
-const propsList = [
-  { prop: 'name', label: '昵称', minWidth: '180px' },
-  { prop: 'realname', label: '真实姓名', minWidth: '180px' },
-  { prop: 'enable', label: '状态', minWidth: '180px', slotName: 'status' },
-  { prop: 'cellphone', label: '手机号', minWidth: '180px' },
-  { prop: 'createAt', label: '创建时间', minWidth: '180px' },
-  { prop: 'updateAt', label: '更新时间', minWidth: '180px' }
-]
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,5 +1,6 @@
 import { IForm } from '@/base-ui/form'
-const formConfig: IForm = {
+
+export const formConfig: IForm = {
   formItems: [
     {
       filed: 'name',
@@ -46,5 +47,3 @@ const formConfig: IForm = {
     padding: '20px 10px'
   }
 }
-
-export default formConfig
