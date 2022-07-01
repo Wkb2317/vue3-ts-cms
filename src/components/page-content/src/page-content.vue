@@ -36,19 +36,33 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
+import { useStore } from '@/store'
 import Table from '@/base-ui/table'
 
-defineProps({
+const props = defineProps({
   contentConfig: {
     type: Object,
     default: () => ({})
   },
-  listData: {
-    type: Array,
-    default: () => []
+  pageName: {
+    type: String,
+    default: ''
   }
 })
+
+const store = useStore()
+
+const requestPayload = {
+  url: `/${props.pageName}/list`,
+  data: {
+    offset: 0,
+    size: 10
+  }
+}
+store.dispatch('system/getListPageAction', requestPayload)
+
+const listData = computed(() => store.state.system.userList)
 
 const handleEditor = (scope: any) => {
   console.log(scope)

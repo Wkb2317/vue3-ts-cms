@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     ElTag: typeof import('element-plus/es')['ElTag']
     NavHeader: typeof import('./src/components/nav-header/src/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/src/nav-menu.vue')['default']
+    PageContent: typeof import('./src/components/page-content/src/page-content.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UserAvatar: typeof import('./src/components/nav-header/src/user-avatar.vue')['default']
