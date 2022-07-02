@@ -28,6 +28,8 @@
         </el-table-column>
       </template>
     </el-table>
+
+    <slot name="footer" class="footer"></slot>
   </div>
 </template>
 

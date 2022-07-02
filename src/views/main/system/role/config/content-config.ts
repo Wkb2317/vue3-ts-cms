@@ -2,10 +2,9 @@ export const contentConfig = {
   showIndex: true,
   title: '角色管理',
   propsList: [
-    { prop: 'name', label: '昵称', minWidth: '180px' },
-    { prop: 'realname', label: '真实姓名', minWidth: '180px' },
+    { prop: 'name', label: '角色', minWidth: '180px' },
     { prop: 'enable', label: '状态', minWidth: '180px', slotName: 'status' },
-    { prop: 'cellphone', label: '手机号', minWidth: '180px' },
+    { prop: 'intro', label: '简介', minWidth: '180px' },
     {
       prop: 'createAt',
       label: '创建时间',

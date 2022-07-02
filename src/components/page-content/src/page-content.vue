@@ -32,6 +32,22 @@
         >删除</el-button
       >
     </template>
+    <template #footer>
+      <div class="footer">
+        <!-- <el-pagination
+          v-model:currentPage="currentPage4"
+          v-model:page-size="pageSize4"
+          :page-sizes="[100, 200, 300, 400]"
+          :small="small"
+          :disabled="disabled"
+          :background="background"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        /> -->
+      </div>
+    </template>
   </Table>
 </template>
 
@@ -62,7 +78,9 @@ const requestPayload = {
 }
 store.dispatch('system/getListPageAction', requestPayload)
 
-const listData = computed(() => store.state.system.userList)
+const listData = computed(() =>
+  store.getters['system/getPageListGetter'](props.pageName)
+)
 
 const handleEditor = (scope: any) => {
   console.log(scope)
@@ -73,4 +91,12 @@ const handleDelete = (scope: any) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.footer {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+</style>

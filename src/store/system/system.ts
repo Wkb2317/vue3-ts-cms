@@ -31,7 +31,7 @@ export const system: Module<ISystemState, IRootState> = {
     getPageListGetter(state) {
       return function (pathName: string) {
         switch (pathName) {
-          case 'user':
+          case 'users':
             return state.userList
           case 'role':
             return state.roleList

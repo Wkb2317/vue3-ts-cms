@@ -9,34 +9,40 @@ export const formConfig: IForm = {
       placeholder: '请输入用户名'
     },
     {
-      filed: 'password',
-      type: 'password',
-      lable: '密码',
-      placeholder: '请输入密码'
+      filed: 'realname',
+      type: 'input',
+      lable: '真实姓名',
+      placeholder: '真实姓名'
     },
     {
-      filed: 'hooby',
+      filed: 'cellphone',
+      type: 'input',
+      lable: '电话号码',
+      placeholder: '电话号码'
+    },
+    {
+      filed: 'enable',
       type: 'select',
-      lable: '选择爱好',
-      placeholder: '请选择爱好',
+      lable: '用户状态',
+      placeholder: '用户状态',
       options: [
         {
-          value: 'coder',
-          label: '敲代码'
+          value: '1',
+          label: '启用'
         },
         {
-          value: 'game',
-          label: '玩游戏'
+          value: '0',
+          label: '禁用'
         }
       ]
     },
     {
-      filed: 'time',
+      filed: 'createAt',
       type: 'date-picker',
-      lable: '时间',
+      lable: '创建时间',
       placeholder: '请选择时间',
       otherOptions: {
-        type: 'date',
+        type: 'daterange',
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间'
       }

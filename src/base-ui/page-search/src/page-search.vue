@@ -3,8 +3,16 @@
     <Form v-bind="formConfig" v-model="formData">
       <template #footer>
         <div class="footer">
-          <el-button class="btn" :icon="Refresh">重置</el-button>
-          <el-button class="btn" type="primary" :icon="Search">搜索</el-button>
+          <el-button @click="handleRefresh" class="btn" :icon="Refresh"
+            >重置</el-button
+          >
+          <el-button
+            @click="handleSearch"
+            class="btn"
+            type="primary"
+            :icon="Search"
+            >搜索</el-button
+          >
         </div>
       </template>
     </Form>
@@ -16,19 +24,29 @@ import { defineProps, ref } from 'vue'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import Form from '@/base-ui/form'
 
-defineProps({
+const props = defineProps({
   formConfig: {
     type: Object,
     require: true
   }
 })
 
-const formData = ref({
-  name: '',
-  password: '',
-  hooby: '',
-  time: ''
-})
+const formItem = props.formConfig?.formItems ?? []
+const formOriginData: any = {}
+for (const item of formItem) {
+  formOriginData[item.filed] = ''
+}
+const formData = ref(formOriginData)
+
+// 重置
+const handleRefresh = () => {
+  for (const key in formOriginData) {
+    formData.value[`${key}`] = formOriginData[`${key}`]
+  }
+}
+
+// 搜索
+// const handleSearch = () => {}
 </script>
 
 <style scoped lang="scss">

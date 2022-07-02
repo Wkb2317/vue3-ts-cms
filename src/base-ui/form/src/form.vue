@@ -35,7 +35,7 @@
               <template v-else-if="item.type === 'date-picker'">
                 <el-date-picker
                   v-model="formData[`${item.filed}`]"
-                  type="date"
+                  :type="item.otherOptions.type"
                   :placeholder="item.placeholder"
                   :start-placeholder="item.otherOptions.startPlaceholder"
                   :end-placeholder="item.otherOptions.endPlaceholder"
@@ -92,6 +92,12 @@ const props = defineProps({
 })
 
 const formData = ref({ ...props.modelValue })
+// watch(
+//   () => props.modelValue,
+//   (newValue) => {
+//     formData.value = { ...newValue }
+//   }
+// )
 
 watch(
   formData,
