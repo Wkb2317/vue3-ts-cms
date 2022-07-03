@@ -71,11 +71,10 @@ const props = defineProps({
 const pageInfo = ref({ currentPage: 0, pageSize: 10 })
 const propsSlotName = ref([])
 const store = useStore()
-const permissions = store.state.login.permissions
 
 // 权限
 const isDelete = usePermissions(props.pageName, 'delete')
-const isUpdate = usePermissions(props.pageName, 'updates')
+const isUpdate = usePermissions(props.pageName, 'update')
 const isCreate = usePermissions(props.pageName, 'create')
 const isQuery = usePermissions(props.pageName, 'query')
 
@@ -109,7 +108,11 @@ const handleEditor = (scope: any) => {
 }
 
 const handleDelete = (scope: any) => {
-  console.log(scope)
+  console.log(scope.row)
+  store.dispatch('system/deleteListPageAction', {
+    pageName: props.pageName,
+    id: scope.row.id
+  })
 }
 
 const handleSearch = (payload: any) => {

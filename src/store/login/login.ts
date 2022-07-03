@@ -58,7 +58,7 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       const userMenusRes = await requestUserMenusByRoleId(userInfo.role.id)
       const menus = userMenusRes.data
-
+      commit('changeMenus', menus)
       LocalCache.setCache('menus', menus)
 
       router.push('/main')

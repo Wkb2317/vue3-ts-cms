@@ -7,3 +7,9 @@ export function getPageList(url: string, data: any) {
     data
   })
 }
+
+export function deletePageList(url: string, id: any) {
+  return Request.delete<IDataType>({
+    url: url + `/${id}`
+  })
+}

@@ -6,7 +6,7 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: process.env.NODE_ENV === 'development' ? './' : '',
+  // publicPath: process.env.NODE_ENV === 'development' ? './' : '',
   // 1. webpack-merge 合并配置
   configureWebpack: {
     devServer: {
