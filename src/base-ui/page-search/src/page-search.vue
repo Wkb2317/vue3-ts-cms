@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, defineEmits } from 'vue'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import Form from '@/base-ui/form'
 
@@ -30,6 +30,8 @@ const props = defineProps({
     require: true
   }
 })
+
+const emit = defineEmits(['handleSearch', 'handleRefresh'])
 
 const formItem = props.formConfig?.formItems ?? []
 const formOriginData: any = {}
@@ -43,10 +45,13 @@ const handleRefresh = () => {
   for (const key in formOriginData) {
     formData.value[`${key}`] = formOriginData[`${key}`]
   }
+  emit('handleRefresh')
 }
 
 // 搜索
-// const handleSearch = () => {}
+const handleSearch = () => {
+  emit('handleSearch', formData)
+}
 </script>
 
 <style scoped lang="scss">

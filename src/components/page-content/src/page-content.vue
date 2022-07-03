@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineExpose } from 'vue'
 import { useStore } from '@/store'
 import Table from '@/base-ui/table'
 
@@ -76,6 +76,7 @@ const requestPayload = {
     size: 10
   }
 }
+
 store.dispatch('system/getListPageAction', requestPayload)
 
 const listData = computed(() =>
@@ -89,6 +90,22 @@ const handleEditor = (scope: any) => {
 const handleDelete = (scope: any) => {
   console.log(scope)
 }
+
+const handleSearch = (payload: any) => {
+  store.dispatch('system/getListPageAction', {
+    url: `/${props.pageName}/list`,
+    data: Object.assign({ offset: 0, size: 10 }, payload.value)
+  })
+}
+
+const handleRefresh = () => {
+  store.dispatch('system/getListPageAction', requestPayload)
+}
+
+defineExpose({
+  handleSearch,
+  handleRefresh
+})
 </script>
 
 <style scoped lang="scss">
