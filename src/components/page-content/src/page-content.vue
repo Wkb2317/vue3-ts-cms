@@ -1,8 +1,15 @@
 <template>
-  <Table v-bind="contentConfig" :listData="listData">
+  <Table
+    v-bind="contentConfig"
+    :listData="listData"
+    :listCount="listCount"
+    v-model:page="pageInfo"
+  >
     <template #add>
       <div>
-        <el-button type="primary" icon="AddLocation">新增</el-button>
+        <el-button v-if="isCreate" type="primary" icon="AddLocation"
+          >新增</el-button
+        >
         <el-button icon="Refresh" />
       </div>
     </template>
@@ -18,6 +25,7 @@
     </template>
     <template #handler="scope">
       <el-button
+        v-if="isUpdate"
         @click="handleEditor(scope)"
         type="primary"
         size="small"
@@ -25,6 +33,7 @@
         >编辑</el-button
       >
       <el-button
+        v-if="isDelete"
         @click="handleDelete(scope)"
         type="danger"
         size="small"
@@ -32,29 +41,21 @@
         >删除</el-button
       >
     </template>
-    <template #footer>
-      <div class="footer">
-        <!-- <el-pagination
-          v-model:currentPage="currentPage4"
-          v-model:page-size="pageSize4"
-          :page-sizes="[100, 200, 300, 400]"
-          :small="small"
-          :disabled="disabled"
-          :background="background"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        /> -->
-      </div>
+    <template
+      v-for="item in propsSlotName"
+      :key="item.prop"
+      #[item.slotName]="scope"
+    >
+      <slot :name="item.slotName" :row="scope.row"></slot>
     </template>
   </Table>
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed, defineExpose } from 'vue'
+import { defineProps, computed, defineExpose, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import Table from '@/base-ui/table'
+import { usePermissions } from '@/hooks/usePermissions'
 
 const props = defineProps({
   contentConfig: {
@@ -67,20 +68,40 @@ const props = defineProps({
   }
 })
 
+const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+const propsSlotName = ref([])
 const store = useStore()
+const permissions = store.state.login.permissions
 
-const requestPayload = {
-  url: `/${props.pageName}/list`,
-  data: {
-    offset: 0,
-    size: 10
+// 权限
+const isDelete = usePermissions(props.pageName, 'delete')
+const isUpdate = usePermissions(props.pageName, 'updates')
+const isCreate = usePermissions(props.pageName, 'create')
+const isQuery = usePermissions(props.pageName, 'query')
+
+watch(pageInfo, () => getPageData())
+
+function getPageData(queryInfo?: any) {
+  const requestPayload = {
+    url: `/${props.pageName}/list`,
+    data: {
+      offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+      size: pageInfo.value.pageSize,
+      ...queryInfo
+    }
   }
+  store.dispatch('system/getListPageAction', requestPayload)
 }
 
-store.dispatch('system/getListPageAction', requestPayload)
+// 获取page数据
+getPageData()
 
 const listData = computed(() =>
   store.getters['system/getPageListGetter'](props.pageName)
+)
+
+const listCount = computed(() =>
+  store.getters['system/getPageCountGetter'](props.pageName)
 )
 
 const handleEditor = (scope: any) => {
@@ -92,15 +113,16 @@ const handleDelete = (scope: any) => {
 }
 
 const handleSearch = (payload: any) => {
-  store.dispatch('system/getListPageAction', {
-    url: `/${props.pageName}/list`,
-    data: Object.assign({ offset: 0, size: 10 }, payload.value)
-  })
+  getPageData(payload)
 }
 
 const handleRefresh = () => {
-  store.dispatch('system/getListPageAction', requestPayload)
+  getPageData()
 }
+
+propsSlotName.value = props.contentConfig.propsList.filter((item: any) => {
+  return !['createAt', 'updateAt', 'handler', 'status'].includes(item.slotName)
+})
 
 defineExpose({
   handleSearch,
@@ -108,12 +130,4 @@ defineExpose({
 })
 </script>
 
-<style scoped lang="scss">
-.footer {
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-</style>
+<style scoped lang="scss"></style>

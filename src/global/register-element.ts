@@ -14,6 +14,7 @@ import {
   ElDropdownMenu,
   ElForm,
   ElFormItem,
+  ElImage,
   ElInput,
   ElLink,
   ElLoading,
@@ -60,7 +61,8 @@ const components = [
   ElTable,
   ElTableColumn,
   ElTag,
-  ElPagination
+  ElPagination,
+  ElImage
 ]
 
 export default function (app: App): void {

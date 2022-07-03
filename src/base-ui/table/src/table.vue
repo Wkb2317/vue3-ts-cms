@@ -5,7 +5,13 @@
       <slot name="add"></slot>
     </div>
 
-    <el-table :data="listData" border stripe style="width: 100%">
+    <el-table
+      v-bind="pageConfig"
+      :data="listData"
+      border
+      stripe
+      style="width: 100%"
+    >
       <el-table-column
         v-if="showIndex"
         type="index"
@@ -15,6 +21,7 @@
       ></el-table-column>
       <template v-for="item in propsList" :key="item.prop">
         <el-table-column
+          show-overflow-tooltip
           align="center"
           :prop="item.prop"
           :label="item.label"
@@ -29,13 +36,25 @@
       </template>
     </el-table>
 
-    <slot name="footer" class="footer"></slot>
+    <slot name="footer">
+      <div class="footer" v-if="showFooter">
+        <el-pagination
+          :currentPage="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listCount"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+    </slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-defineProps({
+import { defineProps, defineEmits } from 'vue'
+const props = defineProps({
   listData: {
     type: Array,
     default: () => []
@@ -51,8 +70,34 @@ defineProps({
   title: {
     type: String,
     default: '默认标题'
+  },
+  listCount: {
+    type: Number,
+    default: 0
+  },
+  page: {
+    type: Object,
+    default: () => ({ currentPage: 0, pageSize: 10 })
+  },
+  pageConfig: {
+    type: Object,
+    default: () => ({})
+  },
+  showFooter: {
+    type: Boolean,
+    default: true
   }
 })
+
+const emit = defineEmits(['update:page'])
+
+const handleSizeChange = (pageSize: any) => {
+  emit('update:page', { pageSize, currentPage: props.page.currentPage })
+}
+
+const handleCurrentChange = (currentPage: any) => {
+  emit('update:page', { pageSize: props.page.pageSize, currentPage })
+}
 </script>
 
 <style scoped lang="scss">
@@ -66,5 +111,13 @@ defineProps({
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.footer {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 </style>

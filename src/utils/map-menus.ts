@@ -35,4 +35,17 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   return routes
 }
 
+export function mapMenusPerssions(userMenus: any[], permissions: any[] = []) {
+  for (const menu of userMenus) {
+    if (menu.permission) {
+      permissions.push(menu.permission)
+    } else {
+      if (menu.children) {
+        mapMenusPerssions(menu.children, permissions)
+      }
+    }
+  }
+  return permissions
+}
+
 export { firstMenu }

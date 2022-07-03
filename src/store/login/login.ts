@@ -6,7 +6,7 @@ import {
   requestUserMenusByRoleId
 } from '@/service/login/login'
 import LocalCache from '@/utils/cache'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToRoutes, mapMenusPerssions } from '@/utils/map-menus'
 
 import type { ILoginState } from './type'
 import type { IRootState } from '../type'
@@ -18,7 +18,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      menus: []
+      menus: [],
+      permissions: []
     }
   },
   getters: {},
@@ -33,6 +34,10 @@ const loginModule: Module<ILoginState, IRootState> = {
       state.menus = menus
       // 路由动态注册
       const routes = mapMenusToRoutes(menus)
+
+      const permissions = mapMenusPerssions(menus)
+      state.permissions = permissions
+
       routes.forEach((route) => {
         router.addRoute('main', route)
       })

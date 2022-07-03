@@ -10,7 +10,11 @@ export const system: Module<ISystemState, IRootState> = {
       userList: [],
       userCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   mutations: {
@@ -25,6 +29,18 @@ export const system: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, payload) {
       state.roleCount = payload.totalCount
+    },
+    changeGoodsList(state, payload: any) {
+      state.goodsList = payload.list
+    },
+    changeGoodsCount(state, payload) {
+      state.goodsCount = payload.totalCount
+    },
+    changeMenuList(state, payload: any) {
+      state.menuList = payload.list
+    },
+    changeMenuCount(state, payload) {
+      state.menuCount = payload.list.length
     }
   },
   getters: {
@@ -35,6 +51,24 @@ export const system: Module<ISystemState, IRootState> = {
             return state.userList
           case 'role':
             return state.roleList
+          case 'goods':
+            return state.goodsList
+          case 'menu':
+            return state.menuList
+        }
+      }
+    },
+    getPageCountGetter(state) {
+      return function (pathName: string) {
+        switch (pathName) {
+          case 'users':
+            return state.userCount
+          case 'role':
+            return state.roleCount
+          case 'goods':
+            return state.goodsCount
+          case 'menu':
+            return state.menuCount
         }
       }
     }
@@ -50,6 +84,15 @@ export const system: Module<ISystemState, IRootState> = {
         case '/role/list':
           commit('changeRoleList', res.data)
           commit('changeRoleCount', res.data)
+          break
+        case '/goods/list':
+          commit('changeGoodsList', res.data)
+          commit('changeGoodsCount', res.data)
+          break
+        case '/menu/list':
+          commit('changeMenuList', res.data)
+          commit('changeMenuCount', res.data)
+          break
       }
     }
   }
