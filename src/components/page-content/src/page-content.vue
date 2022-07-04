@@ -7,7 +7,11 @@
   >
     <template #add>
       <div>
-        <el-button v-if="isCreate" type="primary" icon="AddLocation"
+        <el-button
+          @click="handleAdd"
+          v-if="isCreate"
+          type="primary"
+          icon="AddLocation"
           >新增</el-button
         >
         <el-button icon="Refresh" />
@@ -52,7 +56,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed, defineExpose, ref, watch } from 'vue'
+import {
+  defineProps,
+  defineEmits,
+  computed,
+  defineExpose,
+  ref,
+  watch
+} from 'vue'
 import { useStore } from '@/store'
 import Table from '@/base-ui/table'
 import { usePermissions } from '@/hooks/usePermissions'
@@ -67,6 +78,7 @@ const props = defineProps({
     default: ''
   }
 })
+const emits = defineEmits(['addBtnClick', 'editBtnClick'])
 
 const pageInfo = ref({ currentPage: 0, pageSize: 10 })
 const propsSlotName = ref([])
@@ -98,13 +110,17 @@ getPageData()
 const listData = computed(() =>
   store.getters['system/getPageListGetter'](props.pageName)
 )
-
 const listCount = computed(() =>
   store.getters['system/getPageCountGetter'](props.pageName)
 )
 
+// function
+const handleAdd = () => {
+  emits('addBtnClick')
+}
+
 const handleEditor = (scope: any) => {
-  console.log(scope)
+  emits('editBtnClick', scope.row)
 }
 
 const handleDelete = (scope: any) => {

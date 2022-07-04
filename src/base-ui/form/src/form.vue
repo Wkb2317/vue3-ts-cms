@@ -4,7 +4,11 @@
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
-            <el-form-item :style="itemStyle" :label="item.lable">
+            <el-form-item
+              v-if="!item.isHidden"
+              :style="itemStyle"
+              :label="item.lable"
+            >
               <template v-if="item.type === 'input'">
                 <el-input
                   :placeholder="item.placeholder"

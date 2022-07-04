@@ -50,7 +50,7 @@ const handleRefresh = () => {
 
 // 搜索
 const handleSearch = () => {
-  emit('handleSearch', formData)
+  emit('handleSearch', formData.value)
 }
 </script>
 
