@@ -26,6 +26,20 @@ export const modelConfig: IForm = {
       type: 'input',
       lable: '电话号码',
       placeholder: '电话号码'
+    },
+    {
+      filed: 'departmentId',
+      type: 'select',
+      lable: '部门',
+      placeholder: '请选择部门',
+      options: []
+    },
+    {
+      filed: 'roleId',
+      type: 'select',
+      lable: '角色',
+      placeholder: '请选择角色',
+      options: []
     }
   ],
   labelWidth: '80px',

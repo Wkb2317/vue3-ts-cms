@@ -91,6 +91,10 @@ class Request {
   delete<T = any>(config: kbRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'delete' })
   }
+
+  patch<T = any>(config: kbRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'patch' })
+  }
 }
 
 export default Request

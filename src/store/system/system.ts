@@ -1,7 +1,12 @@
 import { Module } from 'vuex'
 import { IRootState } from '../index'
 import { ISystemState } from './type'
-import { getPageList, deletePageList } from '@/service/main/user'
+import {
+  getPageList,
+  deletePageList,
+  addPageData,
+  editPageData
+} from '@/service/main/user'
 
 export const system: Module<ISystemState, IRootState> = {
   namespaced: true,
@@ -100,6 +105,36 @@ export const system: Module<ISystemState, IRootState> = {
       await deletePageList(payload.pageName, payload.id)
       await dispatch('getListPageAction', {
         url: `/${payload.pageName}/list`,
+        data: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+
+    // 添加modal弹窗数据
+    async addModalDataAction({ dispatch }, payload) {
+      const { pageName, addData } = payload
+      const url = `/${pageName}`
+      await addPageData(url, addData)
+
+      dispatch('getListPageAction', {
+        url: `/${pageName}/list`,
+        data: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+
+    // 编辑modal弹窗数据
+    async editModalDataAction({ dispatch }, payload) {
+      const { pageName, editData, id } = payload
+      const url = `/${pageName}/${id}`
+      await editPageData(url, editData)
+
+      dispatch('getListPageAction', {
+        url: `/${pageName}/list`,
         data: {
           offset: 0,
           size: 10

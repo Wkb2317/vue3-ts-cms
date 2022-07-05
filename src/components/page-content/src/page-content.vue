@@ -80,7 +80,7 @@ const props = defineProps({
 })
 const emits = defineEmits(['addBtnClick', 'editBtnClick'])
 
-const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 const propsSlotName = ref([])
 const store = useStore()
 
@@ -96,7 +96,7 @@ function getPageData(queryInfo?: any) {
   const requestPayload = {
     url: `/${props.pageName}/list`,
     data: {
-      offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+      offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
       size: pageInfo.value.pageSize,
       ...queryInfo
     }

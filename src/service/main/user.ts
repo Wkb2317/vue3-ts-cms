@@ -13,3 +13,17 @@ export function deletePageList(url: string, id: any) {
     url: url + `/${id}`
   })
 }
+
+export function addPageData(url: string, data: any) {
+  return Request.post({
+    url,
+    data
+  })
+}
+
+export function editPageData(url: string, data: any) {
+  return Request.patch({
+    url,
+    data
+  })
+}
