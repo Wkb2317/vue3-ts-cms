@@ -13,7 +13,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
           <el-dropdown-item>系统设置</el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -22,11 +22,19 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
-import { computed } from '@vue/reactivity'
+import cache from '@/utils/cache'
 
+const router = useRouter()
 const store = useStore()
 const userInfo = computed(() => store.state.login.userInfo)
+
+const handleLogout = () => {
+  cache.clearCache()
+  router.replace('/login')
+}
 </script>
 
 <style scoped lang="scss">

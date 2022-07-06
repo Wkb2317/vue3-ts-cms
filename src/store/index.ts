@@ -3,7 +3,7 @@ import login from './login/login'
 import { system } from './system/system'
 import type { IRootState, IStoreType } from './type'
 export * from './type'
-import { getPageList } from '@/service/main/user'
+import { getPageList, getMenuData } from '@/service/main/user'
 
 const store = createStore<IRootState>({
   state() {
@@ -11,7 +11,8 @@ const store = createStore<IRootState>({
       name: '',
       age: 0,
       entireDepartment: [],
-      entireRole: []
+      entireRole: [],
+      entireMenus: []
     }
   },
   mutations: {
@@ -20,6 +21,9 @@ const store = createStore<IRootState>({
     },
     changeEntireRole(state, payload) {
       state.entireRole = payload
+    },
+    changeEntireMenus(state, payload) {
+      state.entireMenus = payload
     }
   },
   actions: {
@@ -32,9 +36,14 @@ const store = createStore<IRootState>({
         offset: 0,
         size: 100
       })
+      const menusRes = await getMenuData('/menu/list', {
+        offset: 0,
+        size: 100
+      })
 
       commit('changeEntireDepartment', departmentRes.data.list)
       commit('changeEntireRole', roleRes.data.list)
+      commit('changeEntireMenus', menusRes.data.list)
     }
   },
   getters: {},
@@ -47,7 +56,6 @@ const store = createStore<IRootState>({
 // 初始化store
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
-  store.dispatch('getInitData')
 }
 
 export function useStore(): Store<IStoreType> {

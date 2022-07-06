@@ -7,6 +7,7 @@
       width="30%"
     >
       <Form v-bind="modelConfig" v-model="modelValue"></Form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="cancelClick">取消</el-button>

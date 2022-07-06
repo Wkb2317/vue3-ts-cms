@@ -71,7 +71,6 @@ const modelConfigRef = computed(() => {
   const role = store.state.entireRole.map((item: any) => {
     return { label: item.name, value: item.id }
   })
-
   let departmentOption = modelConfig.formItems.find(
     (item) => item.filed === 'departmentId'
   )

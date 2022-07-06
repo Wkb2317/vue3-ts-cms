@@ -44,12 +44,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       const loginRes = await accountLoginRequest(payload)
       const { id, token } = loginRes.data
 
       commit('changeToken', token)
       LocalCache.setCache('token', token)
+
+      // 获取token后，请求部门和角色数据
+      dispatch('getInitData', null, { root: true })
 
       const userInfoRes = await requestUserInfoById(id)
       const userInfo = userInfoRes.data

@@ -27,3 +27,10 @@ export function editPageData(url: string, data: any) {
     data
   })
 }
+
+export function getMenuData(url: string, data: any) {
+  return Request.get({
+    url,
+    data
+  })
+}
