@@ -32,6 +32,10 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  otherData: {
+    type: Array,
+    default: () => []
+  },
   pageName: {
     type: String,
     require: true
@@ -60,7 +64,7 @@ const confirmClick = () => {
     console.log('edit')
     const payload = {
       pageName: props.pageName,
-      editData: { ...modelValue.value },
+      editData: { ...modelValue.value, menuList: [...props.otherData] },
       id: props.defaultData.id
     }
     store.dispatch('system/editModalDataAction', payload)
@@ -69,7 +73,7 @@ const confirmClick = () => {
     console.log('add')
     const payload = {
       pageName: props.pageName,
-      addData: { ...modelValue.value }
+      addData: { ...modelValue.value, menuList: [...props.otherData] }
     }
     store.dispatch('system/addModalDataAction', payload)
   }

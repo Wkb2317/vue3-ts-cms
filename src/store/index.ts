@@ -56,6 +56,7 @@ const store = createStore<IRootState>({
 // 初始化store
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
+  store.dispatch('getInitData')
 }
 
 export function useStore(): Store<IStoreType> {

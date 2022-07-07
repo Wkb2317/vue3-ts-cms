@@ -29,7 +29,7 @@ export function editPageData(url: string, data: any) {
 }
 
 export function getMenuData(url: string, data: any) {
-  return Request.get({
+  return Request.post({
     url,
     data
   })

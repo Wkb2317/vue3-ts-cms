@@ -48,4 +48,16 @@ export function mapMenusPerssions(userMenus: any[], permissions: any[] = []) {
   return permissions
 }
 
+export function mapMenusGetId(userMenus: any[], idArray: any[] = []) {
+  for (const item of userMenus) {
+    // idArray.push(item.id)
+    if (item.children) {
+      mapMenusGetId(item.children, idArray)
+    } else {
+      idArray.push(item.id)
+    }
+  }
+  return idArray
+}
+
 export { firstMenu }
