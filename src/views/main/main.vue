@@ -51,6 +51,8 @@ const changeCollaps = () => {
   height: calc(100% - 48px);
 
   .page-info {
+    height: 100%;
+    width: 100%;
     background-color: #fff;
     border-radius: 5px;
   }

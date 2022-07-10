@@ -7,3 +7,5 @@ declare module '*.vue' {
 
 declare const VUE_APP_BASE_URL: string
 // declare const BASE_URL: string
+
+declare module '*.json'
